@@ -48,7 +48,7 @@ function displayMessage(){
     cpsCheck = cpsCheck + 1;
 }   
 
-clickPowerMultiplierPrice = 10000;
+clickPowerMultiplierPrice = 5000;
 // Click Power Doubles
 var btn3 = document.getElementById("button3");
 btn3.addEventListener("click", clickPowerMultiplierFunc);
@@ -343,14 +343,14 @@ function muteAudio() {
 // Worker Upgrades \\ button6
 
 var btn5 = document.getElementById("button5");
-btn5.addEventListener("click", buyWorkerUpgrade);
+btn5.addEventListener("click", buyWorkerUpgrade1);
 var btn6 = document.getElementById("button6");
-btn6.addEventListener("click", buyWorkerUpgrade);
+btn6.addEventListener("click", buyWorkerUpgrade2);
 
 workerUpgradeMultiplier = 1;
 workerTier = 1;
 
-function buyWorkerUpgrade() {
+function buyWorkerUpgrade1() {
     if (times >= 12500 && workerTier == 1) {
         workerUpgradeMultiplier = 2;
         workerTier = 2;
@@ -364,7 +364,10 @@ function buyWorkerUpgrade() {
         updCookies()
         cheersSFX()
     }
-    else if (times >= 150000 && workerTier == 2) {
+}
+
+function buyWorkerUpgrade2() {
+    if (times >= 150000 && workerTier == 2) {
         workerUpgradeMultiplier = 10;
         workerTier = 3;
         document.getElementById("button6").innerHTML = ('Bought!');

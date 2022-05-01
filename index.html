@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="filler"></div> <br>
+
+    <div>
+        <div class="headerTop">
+            <span id="info">
+                Scuffed Cookie Clicker!!
+            </span>
+        </div>
+            <div class = "statsAU">
+                <span id="stats">Current Click Power: 1</span> 
+                <span id="muteMenu">    
+                    <label class="switch">
+                        <input type="checkbox" id="muteButtonHTML">
+                        <span class="slider"></span>
+                    </label>
+                    <span id="muteState">Audio is active!</span>
+                </span>
+            </div>
+    </div>
+        
+    <div class="buttonsWrapper">
+        <div class="cookieSection">
+            <button type="button" aria-hidden="true" id="myBtn"><img src="items/cookie.jpg" alt="" id="cookieImg"></button>
+            <br> <div id="msg"><span id="count">The button has been clicked 0 times!</span></div>
+        </div>
+        <div class="actionsSection">
+            <button type="menu" id="button2">0x Buy Lazy Clicker Slaves - 15</button>
+            <button type="menu" id="button5">0x Clickers Education - 35000</button> <br>
+            <button type="menu" id="button1">1x Buy Click Power - 50</button> <br>
+            <button type="menu" id="button3">1x Cookie Twinner - 10000</button> <br>
+            <div class="doomFacs">
+                <button type="menu" id="button4">Buy Doom Factory - 35000</button> 
+                <button type="menu" id="button4e">Pay The Price</button> <br>
+            </div>
+        </div>
+    </div>
+        
+    <!-- <button name="favorite">
+        <svg aria-hidden="true" viewBox="0 0 10 10"><path d="M7 9L5 8 3 9V6L1 4h3l1-3 1 3h3L7 6z"/></svg>
+        Add to favorites
+      </button> -->
+
+
+
+    <script src="index.js"></script>
+    <script src="scripts.js"></script>
+    <script src="jquery.min.jsm"></script>
+
+    <script>
+    $(document).ready(function(){
+        $('.headerTop').hide().show(1000);
+        $('#stats').hide().delay(1500).show(1000);  
+        $('#myBtn').hide().delay(2500).show(1000); 
+        $('#msg').hide().delay(2500).show(1000); 
+        $('#muteMenu').hide().delay(3000).show(1000);
+        $('#button1').hide();
+        $('#button2').hide();
+        $('#button3').hide();
+        $('#button4').hide();
+        $('#button4e').hide();
+        $('#button5').hide();
+        $('#hide').hide()
+        $('#hide1').hide()
+        $('.filler').hide()
+
+    });
+
+
+    powerUp1 = false;
+    powerUp2 = false;
+    powerUp3 = false;
+    powerUp4 = false;
+    powerUp5 = false;
+    
+    setInterval(() => {
+        if (times >= 15 && powerUp1 == false) {
+            powerUp1 = true;
+            $(function(){
+                $('#button2').show(1000);
+            });
+        }
+        if (times >= 50 && powerUp2 == false) {
+            powerUp2 = true;
+            upReady.play()
+            $(function(){
+                $('#button1').show(1000);
+            });
+        }
+        if (times >= 10000 && powerUp3 == false) {
+            powerUp3 = true;
+            upReady.play()
+            $(function(){
+                $('#button3').show(1000);
+            })
+        }
+        if (times >= 35000 && powerUp4 == false) {
+            powerUp4 = true;
+            upReady.play()
+            $(function(){
+                $('#button4').show(1000);
+            })
+        }
+        if (times >= 35000 && powerUp5 == false) {
+            powerUp5 = true;
+            upReady.play()
+            $(function(){
+                $('#button5').show(1000);
+            })
+        }
+    {};
+    }, 100);
+    
+    </script>
+
+    
+
+
+
+</body>
+</html>

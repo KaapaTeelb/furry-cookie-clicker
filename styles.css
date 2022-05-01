@@ -1,0 +1,147 @@
+button {
+    background-color: none;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background-color: #e9d1b8;
+}
+
+#cookieImg {
+    pointer-events: none;
+}
+
+button:hover {
+    background-color: #3e8e41;
+}
+
+button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+#info {
+    background-color: #886136;
+    font-size: 24px;
+    outline: none;
+    margin: 10px;
+    width: 20px;
+    text-shadow: 2px 1px 0 #ffebe2;
+}
+
+#stats {
+    font-size: 16px;
+    outline: none;
+    margin: 3px;
+    text-shadow: 2px 1px 0 #ffebe2;
+}
+
+#muteState {
+    font-size: 16px;
+    outline: none;
+    text-shadow: 2px 1px 0 #ffebe2;
+}
+
+#msg {
+    font-size: 16px;
+    outline: none;
+    margin: 1%;
+    text-shadow: 2px 1px 0 #ffebe2;
+}
+
+.filler {
+    width:2000px; 
+    height:2000px; 
+}
+
+.buttonsWrapper {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 20px;
+}
+
+.actionsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    align-items: flex-start;
+}
+
+.doomFacs {
+    display: inline-flex;
+    gap: 2px;
+}
+
+.headerTop {
+    width: auto;
+}
+
+
+/* The switch - the box around the slider */
+.switch {
+position: relative;
+display: inline-block;
+width: 30px;
+height: 15px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+/* The slider */
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 8px;
+width: 8px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+input:checked + .slider {
+background-color: #da8a22;
+}
+
+input:focus + .slider {
+box-shadow: 0 0 1px #da8a22;
+}
+
+input:checked + .slider:before {
+-webkit-transform: translateX(14px);
+-ms-transform: translateX(14px);
+transform: translateX(14px);
+}
+
+/* Rounded sliders */
+.slider.round {
+border-radius: 34px;
+}
+
+.slider.round:before {
+border-radius: 50%;
+} 
+
+.statsAU {
+    margin: 10px;
+
+}

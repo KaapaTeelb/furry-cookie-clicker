@@ -161,18 +161,22 @@ btnClick.load();
 
 btn.onclick = function() {
     if (audioMuted == false) {
-        btnClick.load();
         btnClick.play();
     }
 }
 
+itemBought.load()
 // SFX buy
 function itemBoughtSFX() {
     if (audioMuted == false) {
-        itemBought.load()
         itemBought.play()
     }
 }
+
+scream1.load()
+scream2.load()
+scream3.load()
+burn.load()
 
 // random for SFX
 function getRandomInt(max) {
@@ -183,18 +187,14 @@ function payThePriceSFX() {
     var temp = getRandomInt(3);
     if (audioMuted == false) { 
     if (temp == 0){
-        scream1.load()
         scream1.play()
     }
     if (temp == 1){
-        scream2.load()
         scream2.play()
     }
     if (temp == 2){
-        scream3.load()
         scream3.play()
     }
-    burn.load()
     burn.play()
 }
 }

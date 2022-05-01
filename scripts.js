@@ -27,7 +27,7 @@ btn2.addEventListener("click", clickSlavesBuy);
 function clickSlavesBuy(){
     if (times >= slavesBuyPrice){
         times = times - slavesBuyPrice;
-        afkSumTotal = afkSumTotal + 1;
+        afkSumTotal = afkSumTotal + (1 * workerUpgradeMultiplier);
         slavesAmount = slavesAmount + 1;
         slavesBuyPrice = slavesBuyPrice * 1.15;
         slavesBuyPrice = roundUp(slavesBuyPrice, 0)
@@ -123,10 +123,19 @@ setInterval(() => {
 //cookies per second stuff
 afkSumTotal = 0;
 timesRounded = 0;
+interestRate = 0;
 
 // FPS function
 setInterval(() => {
-    times = times + (afkSumTotal + doomFacIncome)/30;
+    // Interest if theres more than 10 workers
+    if (slavesAmount >= 10) {
+        interestRate = times * 0.0021;
+    }
+    else {
+        interestRate = 0;
+    }
+    // Cookies Per Second stuff 2 (The grand remix)
+    times = times + (afkSumTotal + doomFacIncome + interestRate)/30;
     timesRounded = roundUp(times, 0);
     updCookies();
 }, 34);
@@ -227,7 +236,15 @@ function updCookies() {
 
 // Slaves Update
 function updSlaves() {
-    document.getElementById("button2").innerHTML = (slavesAmount + "x Buy Lazy Clicker Slaves - " + slavesBuyPrice);
+    if (workerTier == 1) {
+        document.getElementById("button2").innerHTML = (slavesAmount + "x Buy Lazy Clicker Slaves - " + slavesBuyPrice);
+    }
+    if (workerTier == 2){
+        document.getElementById("button2").innerHTML = (slavesAmount + "x Buy Educated Clicker Slaves - " + slavesBuyPrice);
+    }
+    if (workerTier == 3){
+        document.getElementById("button2").innerHTML = (slavesAmount + "x Buy Expassionate Workers - " + slavesBuyPrice);
+    }
 }
 
 // Click Power Update || 1x Buy Click Power - 50
@@ -313,5 +330,42 @@ function muteAudio() {
     else if (audioMuted == true) {
         document.getElementById("muteState").innerHTML = ("Audio is active!")
         audioMuted = false;
+    }
+}
+
+// Worker Upgrades \\ button6
+
+var btn5 = document.getElementById("button5");
+btn5.addEventListener("click", buyWorkerUpgrade);
+var btn6 = document.getElementById("button6");
+btn6.addEventListener("click", buyWorkerUpgrade);
+
+workerUpgradeMultiplier = 1;
+workerTier = 1;
+
+function buyWorkerUpgrade() {
+    if (times >= 12500 && workerTier == 1) {
+        workerUpgradeMultiplier = 2;
+        workerTier = 2;
+        document.getElementById("button5").innerHTML = ('Bought!');
+        times -= 12500;
+        slavesBuyPrice *= 2;
+        afkSumTotal += slavesAmount;
+        $('#button5').delay(3000).hide(1000);
+        updSlaves()
+        itemBoughtSFX()
+        updCookies()
+    }
+    else if (times >= 150000 && workerTier == 2) {
+        workerUpgradeMultiplier = 10;
+        workerTier = 3;
+        document.getElementById("button6").innerHTML = ('Bought!');
+        times -= 150000;
+        slavesBuyPrice *= 2;
+        afkSumTotal += slavesAmount*8;
+        $('#button6').delay(3000).hide(1000);
+        updSlaves()
+        itemBoughtSFX()
+        updCookies()
     }
 }

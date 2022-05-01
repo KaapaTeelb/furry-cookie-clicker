@@ -42,13 +42,15 @@
         </div>
         <div class="actionsSection">
             <button type="menu" id="button2">0x Buy Lazy Clicker Slaves - 15</button>
-            <button type="menu" id="button5">0x Clickers Education - 35000</button> <br>
+            <button type="menu" id="button5">Buy Mid Clickers Education - 12500</button> <br>
+            <button type="menu" id="button6">Buy High Tier Clickers Education - 150000</button>
             <button type="menu" id="button1">1x Buy Click Power - 50</button> <br>
             <button type="menu" id="button3">1x Cookie Twinner - 10000</button> <br>
             <div class="doomFacs">
                 <button type="menu" id="button4">Buy Doom Factory - 35000</button> 
                 <button type="menu" id="button4e">Pay The Price</button> <br>
             </div>
+             <br>
         </div>
     </div>
         
@@ -76,6 +78,7 @@
         $('#button4').hide();
         $('#button4e').hide();
         $('#button5').hide();
+        $('#button6').hide();
         $('#hide').hide()
         $('#hide1').hide()
         $('.filler').hide()
@@ -88,7 +91,8 @@
     powerUp3 = false;
     powerUp4 = false;
     powerUp5 = false;
-    
+    powerUp6 = false;
+
     setInterval(() => {
         if (times >= 15 && powerUp1 == false) {
             powerUp1 = true;
@@ -98,30 +102,47 @@
         }
         if (times >= 50 && powerUp2 == false) {
             powerUp2 = true;
-            upReady.play()
+            if (audioMuted == false) {
+                upReady.play()
+            }
             $(function(){
                 $('#button1').show(1000);
             });
         }
         if (times >= 10000 && powerUp3 == false) {
             powerUp3 = true;
-            upReady.play()
+            if (audioMuted == false) {
+                upReady.play()
+            }
             $(function(){
                 $('#button3').show(1000);
             })
         }
         if (times >= 35000 && powerUp4 == false) {
             powerUp4 = true;
-            upReady.play()
+            if (audioMuted == false) {
+                upReady.play()
+            }
             $(function(){
                 $('#button4').show(1000);
             })
         }
-        if (times >= 35000 && powerUp5 == false) {
+        if (times >= 12500 && powerUp5 == false) {
             powerUp5 = true;
-            upReady.play()
+            if (audioMuted == false) {
+                upReady.play()
+            }
             $(function(){
                 $('#button5').show(1000);
+            })
+        }
+        if (times >= 150000 && powerUp6 == false && workerTier == 2) {
+            powerUp6 = true;
+            if (audioMuted == false) {
+                upReady.play()
+            }
+            $(function(){
+                $('#button6').show(1000);
             })
         }
     {};

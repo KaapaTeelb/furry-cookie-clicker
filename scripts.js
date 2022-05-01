@@ -164,6 +164,7 @@ var burn = new Audio("items/burn.mp3")
 var crack1 = new Audio("items/crack1.mp3")
 var crack2 = new Audio("items/crack2.mp3")
 var crack3 = new Audio("items/crack3.mp3")
+var cheers = new Audio("items/cheers.mp3")
 
 
 btnClick.load();
@@ -179,6 +180,12 @@ itemBought.load()
 function itemBoughtSFX() {
     if (audioMuted == false) {
         itemBought.play()
+    }
+}
+
+function cheersSFX() {
+    if (audioMuted == false) {
+        cheers.play()
     }
 }
 
@@ -310,7 +317,7 @@ function payThePrice(){
     updSlaves()
     funnyDoomFacTimer = 0;
     doomFacStacks += 1;
-    doomFacIncome += 150;
+    doomFacIncome += 175;
     doomFacPeopleFed += 1;
     payThePriceSFX()
     }
@@ -355,6 +362,7 @@ function buyWorkerUpgrade() {
         updSlaves()
         itemBoughtSFX()
         updCookies()
+        cheersSFX()
     }
     else if (times >= 150000 && workerTier == 2) {
         workerUpgradeMultiplier = 10;
@@ -367,5 +375,6 @@ function buyWorkerUpgrade() {
         updSlaves()
         itemBoughtSFX()
         updCookies()
+        cheersSFX()
     }
 }

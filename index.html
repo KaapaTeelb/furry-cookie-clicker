@@ -19,10 +19,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet"> 
 </head>
 
-<body>
+<body id="bodyColored">
     <div class="filler"></div> <br>
+    <div class="finaleStars">
+        <div>
+            <span id="win1" title="❓ One Million">❌</span>
+            <span id="win2" title="❓ DOOMSDAY">❌</span>
+            <span id="win3" title="❓ Respected By Many">❌</span>
+            <span id="win4" title="❓ Walk On The Heads">❌</span>
+            <span id="win5" title="❓ Way... Way Too Far">❌</span>
+            <span id="win6" title="❓ Finger Control">❌</span>
+            <span id="win7" title="❓ Was It Worth It?">❌</span>
+            <span id="win8" title="❓ In The Depths... A Friend Will Emerge...">❌</span>
+        </div>
+    </div>
     <div id="menuAll">
-
         <div>
             <div class="headerTop">
                 <span id="info">
@@ -30,9 +41,9 @@
                         Scuffed Cookie Clicker!! 🍪
                     </a>
                 </span>
-        </div>
+            </div>
             <div class = "statsAU">
-                <span id="stats">Current Click Power: 1</span> 
+                <span id="stats">Current Click Power: 1  </span> 
                 <span id="muteMenu">    
                     <label class="switch">
                         <input type="checkbox" id="muteButtonHTML">
@@ -41,43 +52,53 @@
                     <span id="muteState">Audio is active!</span>
                 </span>
             </div>
+        </div>
+            
+        <div class="buttonsWrapper">
+            <div class="cookieSection">
+                <button type="button" aria-hidden="true" id="myBtn"><img src="items/cookie.jpg" alt="" id="cookieImg"></button>
+                <br> <div id="msg"><span id="count">The button has been clicked 0 times!</span></div>
+                <div id="msg"><span id="count2">The button has been clicked 0 times!</span></div>
+
+            </div>
+            <div class="actionsSection">
+                <button type="menu" id="button2">0x Buy Lazy Clicker Slaves - 15</button>
+                <button type="menu" id="button5">Buy Mid Clickers Education - 12500</button> <br>
+                <button type="menu" id="button6">Buy High Tier Clickers Education - 150000</button>
+                <button type="menu" id="button1">1x Buy Click Power - 50</button> <br>
+                <button id="buttonLoan" onclick="takeLoan()">Take a Loan</button>
+                <button type="menu" id="button3">1x Cookie Twinner - 5000</button> <br>
+                <div class="doomFacs">
+                    <button type="menu" id="button4">Buy Doom Factory - 35000</button> 
+                    <button type="menu" id="button4e">Pay The Price</button> <br>
+                </div>
+                <button id="buttonGolem" onclick="buyGolem()">Activate the... Golem?</button>
+                <button type="menu" id="button7" onclick="upgradeDoomFac()">More! - 350000</button>
+                <br>
+                <button id="facSpeech1" onclick="times -= 1000000">A%VFBQ^#L7IPF^*HEC!PKP!@B%*JWV</button>
+                <button id="facSpeech2" onclick="times -= 1000000">QOPefoJQIQJoolatUJQIJQVOJIO</button>
+                <button id="facSpeech3" onclick="times -= 1000000">k!CCEPT!0jfqi!THEFUTUjWJ1jI</button>
+                <button id="facSpeech4" onclick="times -= 1000000">JMdonotNOIrunnwIOVNOQ</button>
+                <button id="facSpeech5" onclick="times -= 1000000">J O I N M E</button>
+            </div>
+        </div>
+        <div>
+            <div id="timerIntro" class="cookieTimer2">00 : 00 : 00 : 000</div>
+        </div>
     </div>
         
-    <div class="buttonsWrapper">
-        <div class="cookieSection">
-            <button type="button" aria-hidden="true" id="myBtn"><img src="items/cookie.jpg" alt="" id="cookieImg"></button>
-            <br> <div id="msg"><span id="count">The button has been clicked 0 times!</span></div>
-        </div>
-        <div class="actionsSection">
-            <button type="menu" id="button2">0x Buy Lazy Clicker Slaves - 15</button>
-            <button type="menu" id="button5">Buy Mid Clickers Education - 12500</button> <br>
-            <button type="menu" id="button6">Buy High Tier Clickers Education - 150000</button>
-            <button type="menu" id="button1">1x Buy Click Power - 50</button> <br>
-            <button type="menu" id="button3">1x Cookie Twinner - 5000</button> <br>
-            <div class="doomFacs">
-                <button type="menu" id="button4">Buy Doom Factory - 35000</button> 
-                <button type="menu" id="button4e">Pay The Price</button> <br>
-            </div>
-             <br>
-            </div>
-        </div>
-    </div>
-        
-        <div id="overlay">
-            <div id="weWon">
-                <div id="weWon1">
-                    <span id="victoryName">Victory Text</span> <br>
+    <div id="overlay">
+        <div id="weWon">
+            <div id="weWon1">
+                <span id="victoryName">Victory Text</span> <br>
                 <span id="victoryDesc">We do a little trolling</span>
-                <div id="timerEd">temp</div>
+                <div id="timerEd" class="cookieTimer">00 : 00 : 00 : 000</div>
             </div>
-            <img src="items/cookie.jpg" alt=""> <br>
-            
-            
+            <img src="items/cookie.jpg" alt="" id="victoryImg"> <br>
         </div>
-        
     </div> 
 
-    <button type="menu" id="overlayButton">Temporary</button> <br>
+    <!-- <button type="menu" id="overlayButton" onclick="">Temporary</button> <br> -->
     <!-- <button name="favorite">
         <svg aria-hidden="true" viewBox="0 0 10 10"><path d="M7 9L5 8 3 9V6L1 4h3l1-3 1 3h3L7 6z"/></svg>
         Add to favorites
@@ -85,10 +106,17 @@
 
 
 
-    <script src="index.js"></script>
+    <!-- <script src="index.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script src="scripts.js"></script>
-    <script src="jquery.min.jsm"></script>
-    <script src="scripts/gameEnd.js"></script>
+    <!-- <script src="jquery.min.jsm"></script> -->
+    <script src="gameEnd.js"></script>
+    <script src="winStates.js"></script>
+    <!-- <script src="jquery-ui-1.13.1/jquery-ui.min.js"></script> -->
+    <script src="saveSystem.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
     $(document).ready(function(){
@@ -97,6 +125,7 @@
         $('#myBtn').hide().delay(2500).show(1000); 
         $('#msg').hide().delay(2500).show(1000); 
         $('#muteMenu').hide().delay(3000).show(1000);
+        $('#timerIntro').hide().delay(2750).show(1000);
         $('#button1').hide();
         $('#button2').hide();
         $('#button3').hide();
@@ -104,11 +133,22 @@
         $('#button4e').hide();
         $('#button5').hide();
         $('#button6').hide();
+        $('#button7').hide();
         $('#hide').hide()
         $('#hide1').hide()
         $('.filler').hide()
-        $('#overlayButton').hide()
-
+        $('#buttonLoan').hide()
+        $('#myBtn').keydown(function(e){e.preventDefault();return false})
+        $('#count2').hide()
+        $('#buttonGolem').hide();
+        $('.finaleStars').hide();
+        $('#win8').hide();
+        $('#facSpeech1').hide();
+        $('#facSpeech2').hide();
+        $('#facSpeech3').hide();
+        $('#facSpeech4').hide();
+        $('#facSpeech5').hide();
+        
     });
 
 
@@ -118,6 +158,10 @@
     powerUp4 = false;
     powerUp5 = false;
     powerUp6 = false;
+    powerUp7 = false;
+    powerUp8 = false;
+    powerUp9 = false;
+    showEndings1 = false;
 
     setInterval(() => {
         if (times >= 15 && powerUp1 == false) {
@@ -171,14 +215,48 @@
                 $('#button6').show(1000);
             })
         }
+        if (times >= 350000 && powerUp7 == false && doomFacPeopleFed >= 10 && doomFacsCount == 1) {
+            powerUp7 = true;
+            if (audioMuted == false) {
+                upReady.play()
+            }
+            $(function(){
+                $('#button7').show(1000);
+            })
+        }
+        if (times >= 2000 && powerUp8 == false) {
+            powerUp8 = true;
+            if (audioMuted == false) {
+                upReady.play()
+            }
+            $(function(){
+                $('#buttonLoan').show(1000);
+            })
+        }
+        if (times <= -10000 && trueEnding == true && powerUp9 == false) {
+            powerUp9 = true;
+            if (audioMuted == false) {
+                upReady.play()
+            }
+            $(function(){
+                $('#buttonGolem').show(1000);
+            })
+        }
+        if (showEndings == true && showEndings1 == false) {
+            showEndings1 = true;
+            if (audioMuted == false) {
+                upReady.play()
+            }
+            $(function(){
+                $('.finaleStars').show(1000);
+            })
+        }
     {};
     }, 100);
     
     </script>
 
     
-
-
 
 </body>
 </html>

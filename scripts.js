@@ -1,7 +1,21 @@
+"use strict";
+let times = 0;
+
+
+let onlyClicks = true;
+// Click Cookie
+let clickPower = 1;
+let clickPowerMultiplier = 1;
+let clickPowerFinal = clickPower * clickPowerMultiplier;
+//cookies per second stuff
+let afkSumTotal = 0;
+let timesRounded = 0;
+let interestRate = 0;
+
 
 // btn1
-clickPowerBuyPrice = 50;
-var btn1 = document.getElementById("button1");
+let clickPowerBuyPrice = 50;
+let btn1 = document.getElementById("button1");
 btn1.addEventListener("click", clickPowerBuy);
 
 // Click Power Buy Func
@@ -16,11 +30,14 @@ function clickPowerBuy(){
         updClickPower();
         itemBoughtSFX();
     }
+    else {
+        errorSFX()
+    }
 }
 
-slavesBuyPrice = 15;
-slavesAmount = 0;
-var btn2 = document.getElementById("button2");
+let slavesBuyPrice = 15;
+let slavesAmount = 0;
+let btn2 = document.getElementById("button2");
 btn2.addEventListener("click", clickSlavesBuy);
 
 // Click Slaves Buy
@@ -34,34 +51,59 @@ function clickSlavesBuy(){
         updSlaves();
         updCookies();
         itemBoughtSFX();
+        onlyClicks = false;
+    }
+    else {
+        errorSFX()
     }
 }
 
-// Click Cookie
-clickPower = 1;
-clickPowerMultiplier = 1;
-clickPowerFinal = clickPower * clickPowerMultiplier;
-times = 0;
+
+
+
 function displayMessage(){
     times = times + clickPowerFinal;
     updCookies();
     cpsCheck = cpsCheck + 1;
+    gameStart()
 }   
 
-clickPowerMultiplierPrice = 5000;
+let timerStarted = false;
+
+function gameStart() {
+    if (timerStarted == false){
+    timerStarted = true;
+    timerStart()
+    $('#timerIntro').delay(5000).fadeOut(2500);
+    }
+    else {
+        null
+    }
+}
+
+let clickPowerMultiplierTier = 1;
+let clickPowerMultiplierPrice = 5000;
 // Click Power Doubles
 var btn3 = document.getElementById("button3");
 btn3.addEventListener("click", clickPowerMultiplierFunc);
 function clickPowerMultiplierFunc() {
-    if (times >= clickPowerMultiplierPrice) {
+    if (times >= clickPowerMultiplierPrice && clickPowerMultiplierTier < 4) {
         times = times - clickPowerMultiplierPrice;
         clickPowerMultiplier = clickPowerMultiplier * 2;
-        clickPowerMultiplierPrice = clickPowerMultiplierPrice * 20;
+        clickPowerMultiplierPrice = clickPowerMultiplierPrice * 4;
+        clickPowerMultiplierTier += 1;
         clickPowerMultiplierPrice = roundUp(clickPowerMultiplierPrice, 0)
         updClickMultiplier();
         updCookies();
         itemBoughtSFX();
         updClickPowerStats()
+        if (clickPowerMultiplierTier == 4){
+            document.getElementById("button3").innerHTML = ('Bought!');
+            $('#button3').delay(3000).hide(1000);
+        }
+    }
+    else {
+        errorSFX()
     }
 }
 
@@ -95,6 +137,10 @@ setInterval(() => {
     //cps counter
     if (cpsCheckTime >= 10){
         // window.location.reload();
+        goodGame('You have been arrested due to Drug Abuse', 'It is quite a horrible sight seeing cops T-Posing near your jail cell...', 'items/jailed.png', 'items/cheers.mp3')
+    }
+    if (cpsCheck >= 100) {
+        goodGame('You have been arrested due to Drug Abuse', 'It is quite a horrible sight seeing cops T-Posing near your jail cell...', 'items/jailed.png', 'items/cheers.mp3')
     }
     cpsCheck = 0;
 }, 1000);
@@ -110,32 +156,45 @@ setInterval(() => {
     else if (cpsCheck == 0){
         edAFKCount += 1;
     }
-    if (edAFKCount >= 3600){
-        console.log('govno))')
+    if (edAFKCount >= 3600 && edAFKCountTemp == 0 && times <= 100){
+        edAFKCountTemp += 1;
+        goodGame('Who needs cookies anyway?', 'You decided to take a better turn in life!', 'items/noCookies.png', 'items/cheers.mp3')
     }
 }, 1000);
 
 
 
+// golem moment
 
+let golemActivated = false;
+let golemMultiplier = 1;
 
-
-//cookies per second stuff
-afkSumTotal = 0;
-timesRounded = 0;
-interestRate = 0;
+function buyGolem() {
+    if (golemActivated == false) {
+        golemActivated = true;
+        golemMultiplier = 0.05;
+        document.getElementById("buttonGolem").innerHTML = ('Activated...?');
+        $('#buttonGolem').delay(3000).hide(1000);
+        times += 10000;
+        itemBoughtSFX()
+        updCookies()
+    }
+    else {
+        errorSFX()
+    }   
+}
 
 // FPS function
 setInterval(() => {
     // Interest if theres more than 10 workers
-    if (slavesAmount >= 10) {
-        interestRate = times * 0.0021;
+    if (slavesAmount >= 10 && doomFacPeopleFed <= 10) {
+        interestRate = times * slavesAmount * 0.00017;
     }
     else {
         interestRate = 0;
     }
     // Cookies Per Second stuff 2 (The grand remix)
-    times = times + (afkSumTotal + doomFacIncome + interestRate)/30;
+    times = times + (afkSumTotal + (doomFacIncome * golemMultiplier) + interestRate)/30;
     timesRounded = roundUp(times, 0);
     updCookies();
 }, 34);
@@ -165,6 +224,13 @@ var crack1 = new Audio("items/crack1.mp3")
 var crack2 = new Audio("items/crack2.mp3")
 var crack3 = new Audio("items/crack3.mp3")
 var cheers = new Audio("items/cheers.mp3")
+var errorS = new Audio("items/error.mp3")
+
+function errorSFX() {
+    if (audioMuted == false) {
+        errorS.play()
+    }
+}
 
 
 btnClick.load();
@@ -216,7 +282,7 @@ function payThePriceSFX() {
 }
 
 // Sound Plays when upgrade is ready
-upReadyTrigger = false;
+let upReadyTrigger = false;
 setInterval(() => {
     if((times >= clickPowerBuyPrice || times >= slavesBuyPrice) && upReadyTrigger == false){
         if (audioMuted == false) {
@@ -274,61 +340,223 @@ function updClickMultiplier() {
 
 
 // Doomfac
-var btn4 = document.getElementById("button4");
+let btn4 = document.getElementById("button4");
 btn4.addEventListener("click", buyDoomFac);
-var btn4e = document.getElementById("button4e");
+let btn4e = document.getElementById("button4e");
 btn4e.addEventListener("click", payThePrice);
 
-doomFacsCount = 0;
-doomFacsPrice = 35000;
-var doomFacIncome = 0;
-var doomFacStacks = 0;
-var doomFacPeopleFed = 0;
+let doomFacsCount = 0;
+let doomFacsPrice = 35000;
+let doomFacsTier = 1;
+let doomFacIncome = 0;
+let doomFacStacks = 0;
+let doomFacPeopleFed = 0;
 
 function buyDoomFac() {
     if (times >= 35000 && doomFacsCount == 0) {
         doomFacsCount += 1;
         document.getElementById("button4").innerHTML = (' 🏭 In Progress...');
+        document.getElementById("button4").style.backgroundColor = ('#b5b5b5');
         times -= 35000;
         $('#button4e').show(1000);
         itemBoughtSFX()
         updCookies()
         doomFacStacks += 10;
         doomFacIncome = 500;
+        onlyClicks = false;
+    }
+    else {
+        errorSFX()
     }
 }
-
-funnyDoomFacTimer = 0;
+ // #e9d1b8
+ let funnyDoomFacTimer = 0;
+ let colorWhiteSwitch = true;
 setInterval(() => {
-    if (funnyDoomFacTimer <= 60 && doomFacsCount >= 1){
-        funnyDoomFacTimer += 1;
+    if (doomFacsTier == 1){
+        if (funnyDoomFacTimer <= 30 && doomFacsCount >= 1){
+            funnyDoomFacTimer += 1;
+        }
+        else if (funnyDoomFacTimer > 30 && doomFacStacks > 0){
+            doomFacStacks -= 1;
+            doomFacIncome -= 150;
+            funnyDoomFacTimer = 0;
+        }
+        if (doomFacStacks == 10) {
+            document.getElementById("button4e").style.cursor = ('no-drop');
+            document.getElementById("button4e").style.backgroundColor = ('#b5b5b5');
+        }
+        else if (doomFacStacks >= 5 && doomFacStacks < 10 && slavesAmount >= 1) {
+            document.getElementById("button4e").style.cursor = ('pointer');
+            document.getElementById("button4e").style.backgroundColor = ('#e9d1b8');
+        }
+        else if (doomFacStacks < 5 && slavesAmount >= 1){
+            document.getElementById("button4e").style.cursor = ('pointer');
+            document.getElementById("button4e").style.backgroundColor = ('#d49048');
+        }
     }
-    else if (funnyDoomFacTimer > 60 && doomFacStacks > 0){
-        doomFacStacks -= 1;
-        doomFacIncome -= 150;
-        funnyDoomFacTimer = 0;
+    else if (doomFacsTier == 2){
+        if (funnyDoomFacTimer <= 3 && doomFacsCount >= 1){
+            funnyDoomFacTimer += 1;
+        }
+        else if (funnyDoomFacTimer > 3 && doomFacStacks > 0){
+            doomFacStacks -= 1;
+            doomFacIncome -= 2000;
+            funnyDoomFacTimer = 0;
+        }
+        if (doomFacStacks == 25) {
+            document.getElementById("button4e").style.cursor = ('no-drop');
+            document.getElementById("button4e").style.backgroundColor = ('#b5b5b5');
+        }
+        else if (doomFacStacks > 10 && doomFacStacks < 25) {
+            document.getElementById("button4e").style.cursor = ('pointer');
+            document.getElementById("button4e").style.backgroundColor = ('#e9d1b8');
+        }
+        else if (doomFacStacks <= 10){
+            document.getElementById("button4e").style.cursor = ('no-drop');
+            $("#button4e").animate({
+                backgroundColor: "#E57543",
+            }, 10000 );
+            document.getElementById("button4").innerHTML = ('🔥💀🔥...sur');
+            document.getElementById("button4e").innerHTML = ('vive...🔥💀🔥');
+            $("#button4").animate({
+                backgroundColor: "#E57543",
+            }, 10000 );
+        }
     }
-}, 1000);
+    //Random Timer I forgor... bru skull || facSpeech1
+    
+    if (golemActivated == true) {
+        if (times <= 0) {
+            times += 5000;
+            updCookies()
+        }
+        else if (times > 0) {
+            times = times + (times * 0.0021)
+            updCookies()
+        }
+        if (times > 100000 && times <= 200000){
+            $('#facSpeech1').show(1000);
+        }
+        if (times > 200000 && times <= 300000){
+            $('#facSpeech1').hide(1000);
+            $('#facSpeech2').show(1000);
+        }
+        if (times > 300000 && times <= 400000){
+            $('#facSpeech2').hide(1000);
+            $('#facSpeech3').show(1000);
+        }
+        if (times > 400000 && times <= 500000){
+            $('#facSpeech3').hide(1000);
+            $('#facSpeech4').show(1000);
+        }
+        if (times > 500000 && times <= 600000){
+            $('#facSpeech4').hide(1000);
+            $('#facSpeech5').show(1000);
+        }
+        if (times > 600000){
+            $('#facSpeech1').hide(1000);
+            $('#facSpeech2').hide(1000);
+            $('#facSpeech3').hide(1000);
+            $('#facSpeech4').hide(1000);
+            $('#facSpeech5').hide(1000);
+        }
+        if (times <= 100000){
+            $('#facSpeech1').hide(1000);
+            $('#facSpeech2').hide(1000);
+            $('#facSpeech3').hide(1000);
+            $('#facSpeech4').hide(1000);
+            $('#facSpeech5').hide(1000);
+        }
+    }
+    //   
+    if (times >= 0 && colorWhiteSwitch == false) {
+        colorWhiteSwitch = true;
+        $("#bodyColored").animate({
+            backgroundColor: "#fff",
+        }, 2000 );
+    }
+    //   
+    if (times < 0 && colorWhiteSwitch == true) {
+        colorWhiteSwitch = false;
+        $("#bodyColored").animate({
+            backgroundColor: "#733737",
+        }, 2000 );
+    }
+
+    }, 1000);
 
 function payThePrice(){
-    if (slavesAmount >= 1 && doomFacStacks <= 9){
-    slavesAmount -= 1;
-    slavesBuyPrice = roundUp((slavesBuyPrice * 0.885), 0);
-    updSlaves()
-    funnyDoomFacTimer = 0;
-    doomFacStacks += 1;
-    doomFacIncome += 175;
-    doomFacPeopleFed += 1;
-    payThePriceSFX()
+    if (doomFacsTier == 1) {
+        if (slavesAmount >= 1 && doomFacStacks <= 9 && doomFacsTier == 1){
+            slavesAmount -= 1;
+            slavesBuyPrice = roundUp((slavesBuyPrice * 0.885), 0);
+            updSlaves()
+            funnyDoomFacTimer = 0;
+            doomFacStacks += 1;
+            doomFacIncome += 150;
+            doomFacPeopleFed += 1;
+            payThePriceSFX()
+            $("#button2").animate({
+                backgroundColor: "#aa0000",
+              }, 250 ).animate({
+                backgroundColor: "#e9d1b8",
+              }, 1000);
+              times += 1000;
+            }
+            else {
+                errorSFX()
+            }
+    }
+    if (doomFacsTier == 2) {
+        if (slavesAmount >= 1 && doomFacsTier == 2 && (doomFacStacks >= 11 && doomFacStacks <= 24)){
+            slavesAmount -= 1;
+            slavesBuyPrice = roundUp((slavesBuyPrice * 0.887), 0);
+            updSlaves()
+            funnyDoomFacTimer = 0;
+            doomFacStacks += 1;
+            doomFacIncome += 2000;
+            doomFacPeopleFed += 1;
+            payThePriceSFX()
+            $("#button2").animate({
+                backgroundColor: "#aa0000",
+              }, 250 ).animate({
+                backgroundColor: "#e9d1b8",
+              }, 1000);
+              times += 1000;
+            }
+        else if (slavesAmount >= 1 && doomFacStacks <= 9 && doomFacsTier == 2) {
+            errorSFX()
+        }
+        else {
+            errorSFX()
+        }
+    }
+    
+}
+
+function upgradeDoomFac() {
+    if (times >= 350000 && doomFacPeopleFed >= 10 && doomFacsTier == 1) {
+        times -= 350000;
+        document.getElementById("button7").innerHTML = ('Good Luck!');
+        
+        $('#button7').delay(3000).hide(1000);
+        doomFacsTier = 2;
+        doomFacStacks = 25;
+        doomFacIncome = 10000;
+        itemBoughtSFX()
+        updCookies()
     }
 }
+
+
 
 // Mute Audio || muteButtonHTML
 
-var muteBtn = document.getElementById("muteButtonHTML");
+let muteBtn = document.getElementById("muteButtonHTML");
 muteBtn.addEventListener("click", muteAudio);
 
-audioMuted = false;
+let audioMuted = false;
 function muteAudio() {
     if (audioMuted == false){
         document.getElementById("muteState").innerHTML = ("Audio is muted!")
@@ -342,13 +570,13 @@ function muteAudio() {
 
 // Worker Upgrades \\ button6
 
-var btn5 = document.getElementById("button5");
+let btn5 = document.getElementById("button5");
 btn5.addEventListener("click", buyWorkerUpgrade1);
-var btn6 = document.getElementById("button6");
+let btn6 = document.getElementById("button6");
 btn6.addEventListener("click", buyWorkerUpgrade2);
 
-workerUpgradeMultiplier = 1;
-workerTier = 1;
+let workerUpgradeMultiplier = 1;
+let workerTier = 1;
 
 function buyWorkerUpgrade1() {
     if (times >= 12500 && workerTier == 1) {
@@ -381,3 +609,80 @@ function buyWorkerUpgrade2() {
         cheersSFX()
     }
 }
+
+let milliseconds = 0;
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+let timerRef = document.querySelector('.cookieTimer');
+let timerRef2 = document.querySelector('.cookieTimer2');
+let int = null;
+
+function timerStart() {
+    if(int!==null){
+        clearInterval(int);
+    }
+    int = setInterval(displayTimer,10);
+}
+
+function timerPause() {
+    clearInterval(int);
+}
+
+function resetTimer() {
+    clearInterval(int);
+    [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+    timerRef.innerHTML = '00 : 00 : 00 : 000 ';
+}
+
+function displayTimer() {
+    milliseconds+=10;
+    if(milliseconds == 1000){
+        milliseconds = 0;
+        seconds++;
+        if(seconds == 60){
+            seconds = 0;
+            minutes++;
+            if(minutes == 60){
+                minutes = 0;
+                hours++;
+            }
+        }
+    }
+    let h,m,s,ms
+    h = hours < 10 ? "0" + hours : hours;
+    m = minutes < 10 ? "0" + minutes : minutes;
+    s = seconds < 10 ? "0" + seconds : seconds;
+    ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
+
+    timerRef.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`;
+    timerRef2.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`;
+}
+
+let loanTaken = false;
+function takeLoan() {
+    if (loanTaken == false) {
+        loanTaken = true;
+        document.getElementById("buttonLoan").innerHTML = ('Loan Taken!');
+        $('#buttonLoan').delay(3000).hide(1000);
+        itemBoughtSFX()
+        updCookies()
+        times += 5000;
+    }
+    else {
+        errorSFX()
+    }
+}
+
+
+
+// setInterval(() => {
+//         doGameTick()
+// }, 250);
+
+// function doGameTick() {
+//     if (frozen == true){
+//         return
+//     }
+    
+// }
